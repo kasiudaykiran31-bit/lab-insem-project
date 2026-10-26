@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>College Portal Login</title>
+</head>
+<body>
+  <h2>College Portal Login</h2>
+  <form id="loginForm">
+    <label>Username:</label>
+    <input type="text" id="username" required><br><br>
+    <label>Password:</label>
+    <input type="password" id="password" required><br><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    // Predefined users stored in Local Storage
+    const users = [
+      { username: "admin", password: "admin123", role: "Admin" },
+      { username: "student", password: "student123", role: "Student" }
+    ];
+    localStorage.setItem("users", JSON.stringify(users));
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const uname = document.getElementById("username").value;
+      const pwd = document.getElementById("password").value;
+      const storedUsers = JSON.parse(localStorage.getItem("users"));
+
+      const user = storedUsers.find(u => u.username === uname && u.password === pwd);
+      if (user) {
+        alert("Login Successful!");
+        if (user.role === "Admin") {
+          window.location.href = "admin.html";
+        } else {
+          window.location.href = "user.html";
+        }
+      } else {
+        alert("Invalid credentials!");
+      }
+    });
+  </script>
+</body>
+</html>
